@@ -2,6 +2,4 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/AdventOfCode2024/.vs/AdventOfCode2024/v17/.suo
-/AdventOfCode2024/.vs/AdventOfCode2024/v17/DocumentLayout.backup.json
-/AdventOfCode2024/.vs/AdventOfCode2024/v17/DocumentLayout.json
+/AdventOfCode2024/.vs/
