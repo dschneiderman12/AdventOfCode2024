@@ -33,10 +33,10 @@ namespace AdventOfCode2024
             day02.Setup();
 
             string answer02One = day02.PartOne(day02.numLists).ToString();
-            //string answer02Two = day02.PartTwo(day01.left, day01.right).ToString();
+            string answer02Two = day02.PartTwo(day02.numLists).ToString();
 
             Console.WriteLine("Day 02 - Part One: " + answer02One);
-            //Console.WriteLine("Day 01 - Part Two: " + answer02Two);
+            Console.WriteLine("Day 01 - Part Two: " + answer02Two);
             #endregion
 
             Console.WriteLine();

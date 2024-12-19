@@ -11,7 +11,7 @@ namespace AdventOfCode2024.Days
         public List<List<int>> numLists { get; set; } = new List<List<int>>();
 
         public void Setup()
-        {  
+        {
             string filePath = @"Inputs\Day02.txt";
             var input = Path.Combine(AppContext.BaseDirectory, filePath);
 
@@ -59,33 +59,29 @@ namespace AdventOfCode2024.Days
 
             foreach (List<int> nums in numLists)
             {
-                bool increasing = nums[0] < nums[1]; // determine initially if increasing or decreasing based on first two numbers
+                bool increasing;
                 bool dampened = false;
+                int fixCount = 0;
 
                 for (int i = 0; i < nums.Count - 1; i++)
                 {
-                    if (!checkIfSafe(nums[i], nums[i + 1], increasing))
-                    {
-                        if (!dampened)
-                        {
-                            dampened = true;
-                            if (i == 0)
-                            {
-                                increasing = nums[1] < nums[2];
-                            }
-                            int removedNum = nums[i];
-                            nums.Remove(removedNum);
+                    increasing = nums[0] < nums[1]; // determine initially if increasing or decreasing based on first two numbers
 
-                        }
-                        else
-                        {
-                            break;
-                        }
+                    if (!checkIfSafe(nums[i], nums[i + 1], increasing)) // if normal steps from part one don't work, attempt number removals rather than breaking loop
+                    {
+                        dampened = true;
+                        fixCount = attemptToDampen(nums);
                     }
 
-                    if (i == nums.Count - 2)  // add to safe count if no unsafe conditions are met and we get to the check of the last two numbers
+                    if (dampened && fixCount == 0) // if dampening didn't work, move on to next number list
+                    {
+                        break;
+                    }
+
+                    if (i == nums.Count - 2 || (fixCount > 0))  // add to safe count if no unsafe conditions are met and we get to the check of the last two numbers, or if a fix was found during dampening
                     {
                         safeCount++;
+                        break; // need to break here so we don't double count the same list that had more than one fix
                     }
                 }
             }
@@ -108,6 +104,39 @@ namespace AdventOfCode2024.Days
                 return false;
             }
             return true;
+        }
+
+        private int attemptToDampen(List<int> nums)
+        {
+            int fixCount = 0;
+
+            for (int j = 0; j < nums.Count; j++)
+            {
+                int removedNum = nums[j]; // remove current number to try again, stored to add back
+                nums.RemoveAt(j);
+                bool increasing = nums[0] < nums[1]; // reset increasing check after number removal
+
+                for (int k = 0; k < nums.Count - 1; k++)
+                {
+                    if (!checkIfSafe(nums[k], nums[k + 1], increasing))
+                    {
+                        break;
+                    }
+                    if (k == nums.Count - 2)  // add to fix count if no unsafe conditions are met and we get to the check of the last two numbers
+                    {
+                        fixCount++;
+                    }
+                }
+
+                if (fixCount > 0) // if fix was found, no need to try more
+                {
+                    break; 
+                }
+
+                nums.Insert(j, removedNum); // add removed number back for next attempt
+            }
+
+            return fixCount;
         }
     }
 }
