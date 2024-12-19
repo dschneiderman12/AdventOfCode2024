@@ -21,22 +21,35 @@ namespace AdventOfCode2024
             //Day01 day01 = new Day01();
             //day01.Setup();
 
-            //string answer01One = day01.PartOne(day01.left, day01.right).ToString();
-            //string answer01Two = day01.PartTwo(day01.left, day01.right).ToString();
+            //string answer01One = day01.PartOne(day01.Left, day01.Right).ToString();
+            //string answer01Two = day01.PartTwo(day01.Left, day01.Right).ToString();
 
             //Console.WriteLine("Day 01 - Part One: " + answer01One);
             //Console.WriteLine("Day 01 - Part Two: " + answer01Two);
             #endregion
 
             #region Day Two
-            Day02 day02 = new Day02();
-            day02.Setup();
+            //Day02 day02 = new Day02();
+            //day02.Setup();
 
-            string answer02One = day02.PartOne(day02.numLists).ToString();
-            string answer02Two = day02.PartTwo(day02.numLists).ToString();
+            //string answer02One = day02.PartOne(day02.NumLists).ToString();
+            //string answer02Two = day02.PartTwo(day02.NumLists).ToString();
 
-            Console.WriteLine("Day 02 - Part One: " + answer02One);
-            Console.WriteLine("Day 01 - Part Two: " + answer02Two);
+            //Console.WriteLine("Day 02 - Part One: " + answer02One);
+            //Console.WriteLine("Day 02 - Part Two: " + answer02Two);
+            #endregion
+
+            #region Day Three
+            Day03 day03 = new Day03();
+
+            day03.SetupPartOne();
+            string answer03One = day03.PartOne(day03.Matches).ToString();
+
+            day03.SetupPartTwo();
+            string answer03Two = day03.PartTwo(day03.Matches).ToString();
+
+            Console.WriteLine("Day 03 - Part One: " + answer03One);
+            Console.WriteLine("Day 03 - Part Two: " + answer03Two);
             #endregion
 
             Console.WriteLine();

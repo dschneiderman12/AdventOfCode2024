@@ -8,7 +8,7 @@ namespace AdventOfCode2024.Days
 {
     internal class Day02
     {
-        public List<List<int>> numLists { get; set; } = new List<List<int>>();
+        public List<List<int>> NumLists { get; set; } = new List<List<int>>();
 
         public void Setup()
         {
@@ -21,7 +21,7 @@ namespace AdventOfCode2024.Days
             while (line != null)
             {
                 List<int> intList = line.Split(" ").Select(int.Parse).ToList();
-                numLists.Add(intList);
+                NumLists.Add(intList);
 
                 line = sr.ReadLine();
             }

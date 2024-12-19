@@ -9,8 +9,8 @@ namespace AdventOfCode2024.Days
 {
     internal class Day01
     {
-        public List<int> left { get; set; } = new List<int>();
-        public List<int> right { get; set; } = new List<int>();
+        public List<int> Left { get; set; } = new List<int>();
+        public List<int> Right { get; set; } = new List<int>();
 
         public void Setup()
         {
@@ -24,8 +24,8 @@ namespace AdventOfCode2024.Days
             {
                 string[] split = line.Split(new char[0], StringSplitOptions.RemoveEmptyEntries);
 
-                left.Add(int.Parse(split[0]));
-                right.Add(int.Parse(split[1]));
+                Left.Add(int.Parse(split[0]));
+                Right.Add(int.Parse(split[1]));
 
                 line = sr.ReadLine();
             }
