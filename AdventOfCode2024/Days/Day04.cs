@@ -65,6 +65,27 @@ namespace AdventOfCode2024.Days
             return xmasCount;
         }
 
+        public int PartTwo(List<char[]> matrix)
+        {
+            int xmasCount = 0;
+
+            for (int i = 0; i < matrix.Count; i++)
+            {
+                for (int j = 0; j < matrix[i].Length; j++)
+                {
+                    Direction currentDirection = Direction.UpLeft;
+                    int directionCount = 0;
+
+                    while (matrix[i][j] == 'A' && directionCount <= 3)
+                    {
+
+                    }
+                }
+            }
+
+            return xmasCount;
+        }
+
         private bool checkNextLetter(char letter, int position)
         {
             char expected;
@@ -84,6 +105,27 @@ namespace AdventOfCode2024.Days
                     break;
                 default:
                     return false;
+            }
+            if (letter == expected)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool checkNextLetterX(char letter, char previous = 'X')
+        {
+            char expected;
+            switch (previous)
+            {
+                case 'M':
+                    expected = 'S';
+                    break;
+                case 'S':
+                    expected = 'M';
+                    break;
+                default:
+                    return true;
             }
             if (letter == expected)
             {
@@ -176,6 +218,17 @@ namespace AdventOfCode2024.Days
                 Direction.UpRight => Direction.DownLeft,
                 Direction.DownLeft => Direction.DownRight,
                 _ => Direction.Up
+            };
+        }
+
+        private Direction nextDirectionX(Direction direction)
+        {
+            return direction switch
+            {
+                Direction.UpLeft => Direction.DownRight,
+                Direction.DownRight => Direction.UpRight,
+                Direction.UpRight => Direction.DownLeft,
+                Direction.DownLeft => Direction.UpLeft
             };
         }
 
