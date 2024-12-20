@@ -10,7 +10,6 @@ namespace AdventOfCode2024.Days
     internal class Day04
     {
         public List<char[]> matrix = new List<char[]>();
-        private int[] currentPosition = [2];
 
         public void Setup()
         {
@@ -31,20 +30,34 @@ namespace AdventOfCode2024.Days
             {
                 for (int j = 0; j < matrix[i].Length; j++)
                 {
-                    int letterCheck = 0;
-                    var currentLetter = matrix[i][j];
-                    var currentPosition = (i, j);
                     Direction currentDirection = Direction.Up;
+                    int directionCount = 0;
 
-                    while (letterCheck <= 3 && checkNextLetter(currentLetter, letterCheck))
+                    while (matrix[i][j] == 'X' && directionCount <= 7)
                     {
-                        var position = nextPosition(currentPosition, Direction.Up);
-                        currentLetter = matrix[position.nextRow][position.nextCol];
-                        letterCheck++;
-                        if (letterCheck == 4)
+                        int letterCheck = 0;
+                        var currentLetter = matrix[i][j];
+                        var currentPosition = (i, j);
+                        bool inBounds = true;
+
+                        while (letterCheck <= 3 && inBounds && checkNextLetter(currentLetter, letterCheck))
                         {
-                            xmasCount++;
+                            var nextPos = nextPosition(currentPosition, currentDirection);
+                            inBounds = nextPos != currentPosition;
+
+                            currentPosition = (nextPos.nextRow, nextPos.nextCol);
+                            currentLetter = matrix[nextPos.nextRow][nextPos.nextCol];
+
+                            letterCheck++;
+
+                            if (letterCheck == 4)
+                            {
+                                xmasCount++;
+                            }
                         }
+
+                        currentDirection = nextDirection(currentDirection);
+                        directionCount++;
                     }
                 }
             }
@@ -81,30 +94,77 @@ namespace AdventOfCode2024.Days
 
         private (int nextRow, int nextCol) nextPosition((int row, int col) current, Direction direction)
         {
+            int nextRow = current.row;
+            int nextCol = current.col;
+
             switch (direction)
             {
                 case Direction.Up:
-                    return (current.row - 1, current.col);
+                    if (checkInBounds(nextRow - 1, nextCol))
+                        nextRow -= 1;
+                    break;
+
                 case Direction.Down:
-                    return (current.row + 1, current.col);
+                    if (checkInBounds(nextRow + 1, nextCol))
+                        nextRow += 1;
+                    break;
+
                 case Direction.Left:
-                    return (current.row, current.col - 1);
+                    if (checkInBounds(nextRow, nextCol - 1))
+                        nextCol -= 1;
+                    break;
+
                 case Direction.Right:
-                    return (current.row, current.col + 1);
+                    if (checkInBounds(nextRow, nextCol + 1))
+                        nextCol += 1;
+                    break;
+
                 case Direction.UpLeft:
-                    return (current.row - 1, current.col - 1);
+                    if (checkInBounds(nextRow - 1, nextCol - 1))
+                    {
+                        nextRow -= 1;
+                        nextCol -= 1;
+                    }
+                    break;
+
                 case Direction.UpRight:
-                    return (current.row - 1, current.col + 1);
+                    if (checkInBounds(nextRow - 1, nextCol + 1))
+                    {
+                        nextRow -= 1;
+                        nextCol += 1;
+                    }
+                    break;
+
                 case Direction.DownLeft:
-                    return (current.row + 1, current.col - 1);
+                    if (checkInBounds(nextRow + 1, nextCol - 1))
+                    {
+                        nextRow += 1;
+                        nextCol -= 1;
+                    }
+                    break;
+
                 case Direction.DownRight:
-                    return (current.row + 1, current.col + 1);
-                default:
-                    return (current.row, current.col);
+                    if (checkInBounds(nextRow + 1, nextCol + 1))
+                    {
+                        nextRow += 1;
+                        nextCol += 1;
+                    }
+                    break;
             }
+
+            return (nextRow, nextCol);
         }
 
-        private Direction nextDirection (Direction direction)
+        private bool checkInBounds(int row, int col)
+        {
+            if (row < matrix.Count && row >= 0 && col < matrix[row].Length && col >= 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private Direction nextDirection(Direction direction)
         {
             return direction switch
             {
@@ -120,15 +180,15 @@ namespace AdventOfCode2024.Days
         }
 
         private enum Direction
-    {
-        Up,
-        Down,
-        Left,
-        Right,
-        UpLeft,
-        UpRight,
-        DownLeft,
-        DownRight
+        {
+            Up,
+            Down,
+            Left,
+            Right,
+            UpLeft,
+            UpRight,
+            DownLeft,
+            DownRight
+        }
     }
-}
 }

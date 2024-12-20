@@ -54,12 +54,12 @@ namespace AdventOfCode2024
 
             #region Day Four
             Day04 day04 = new Day04();
-            //day04.Setup();
+            day04.Setup();
 
-            //string answer04One = day02.PartOne(day02.NumLists).ToString();
-            //string answer02Two = day02.PartTwo(day02.NumLists).ToString();
+            string answer04One = day04.PartOne(day04.matrix).ToString();
+            //string answer02Two = day04.PartTwo(day02.NumLists).ToString();
 
-            //Console.WriteLine("Day 04 - Part One: " + answer04One);
+            Console.WriteLine("Day 04 - Part One: " + answer04One);
             //Console.WriteLine("Day 04 - Part Two: " + answer04Two);
             #endregion
 
