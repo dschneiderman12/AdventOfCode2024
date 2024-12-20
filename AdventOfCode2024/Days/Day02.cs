@@ -13,20 +13,13 @@ namespace AdventOfCode2024.Days
         public void Setup()
         {
             string filePath = @"Inputs\Day02.txt";
-            var input = Path.Combine(AppContext.BaseDirectory, filePath);
+            var lines = File.ReadAllLines(filePath);
 
-            StreamReader sr = new StreamReader(input);
-            string line = sr.ReadLine();
-
-            while (line != null)
+            foreach (string line in  lines)
             {
                 List<int> intList = line.Split(" ").Select(int.Parse).ToList();
                 NumLists.Add(intList);
-
-                line = sr.ReadLine();
             }
-
-            sr.Close();
         }
 
         public int PartOne(List<List<int>> numLists)

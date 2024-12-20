@@ -40,21 +40,31 @@ namespace AdventOfCode2024
             #endregion
 
             #region Day Three
-            Day03 day03 = new Day03();
+            //Day03 day03 = new Day03();
 
-            day03.SetupPartOne();
-            string answer03One = day03.PartOne(day03.Matches).ToString();
+            //day03.SetupPartOne();
+            //string answer03One = day03.PartOne(day03.Matches).ToString();
 
-            day03.SetupPartTwo();
-            string answer03Two = day03.PartTwo(day03.Matches).ToString();
+            //day03.SetupPartTwo();
+            //string answer03Two = day03.PartTwo(day03.Matches).ToString();
 
-            Console.WriteLine("Day 03 - Part One: " + answer03One);
-            Console.WriteLine("Day 03 - Part Two: " + answer03Two);
+            //Console.WriteLine("Day 03 - Part One: " + answer03One);
+            //Console.WriteLine("Day 03 - Part Two: " + answer03Two);
+            #endregion
+
+            #region Day Four
+            Day04 day04 = new Day04();
+            //day04.Setup();
+
+            //string answer04One = day02.PartOne(day02.NumLists).ToString();
+            //string answer02Two = day02.PartTwo(day02.NumLists).ToString();
+
+            //Console.WriteLine("Day 04 - Part One: " + answer04One);
+            //Console.WriteLine("Day 04 - Part Two: " + answer04Two);
             #endregion
 
             Console.WriteLine();
             Console.WriteLine("------------------------------");
-            Console.ReadLine();
         }
     }
 }

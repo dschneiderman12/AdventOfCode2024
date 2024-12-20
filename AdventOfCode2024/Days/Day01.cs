@@ -15,22 +15,15 @@ namespace AdventOfCode2024.Days
         public void Setup()
         {
             string filePath = @"Inputs\Day01.txt";
-            var input = Path.Combine(AppContext.BaseDirectory, filePath);
+            var lines = File.ReadAllLines(filePath);
 
-            StreamReader sr = new StreamReader(input);
-            string line = sr.ReadLine();
-
-            while (line != null)
+            foreach (string line in lines)
             {
                 string[] split = line.Split(new char[0], StringSplitOptions.RemoveEmptyEntries);
 
                 Left.Add(int.Parse(split[0]));
                 Right.Add(int.Parse(split[1]));
-
-                line = sr.ReadLine();
             }
-
-            sr.Close();
         }
 
         public int PartOne(List<int> left, List<int> right)
