@@ -14,13 +14,10 @@ namespace AdventOfCode2024.Days
         public void SetupPartOne()
         {
             string filePath = @"Inputs\Day03.txt";
-            var input = Path.Combine(AppContext.BaseDirectory, filePath);
+            var lines = File.ReadAllLines(filePath);
 
-            StreamReader sr = new StreamReader(input);
-            string line = sr.ReadLine();
-
-            while (line != null)
-            {
+            foreach (string line in lines)
+            { 
                 string pattern = @"mul\(\d+,\d+\)";
 
                 MatchCollection matchCollection = Regex.Matches(line, pattern);
@@ -29,24 +26,17 @@ namespace AdventOfCode2024.Days
                 {
                     Matches.Add(match.Value);
                 }
-
-                line = sr.ReadLine();
             }
-
-            sr.Close();
         }
 
         public void SetupPartTwo()
         {
             string filePath = @"Inputs\Day03.txt";
-            var input = Path.Combine(AppContext.BaseDirectory, filePath);
-
-            StreamReader sr = new StreamReader(input);
-            string line = sr.ReadLine();
+            var lines = File.ReadAllLines(filePath);
 
             Matches.Clear();
 
-            while (line != null)
+            foreach (string line in lines)
             {
                 string pattern = @"mul\(\d+,\d+\)|don\'t\(\)|do\(\)";
 
@@ -56,11 +46,7 @@ namespace AdventOfCode2024.Days
                 {
                     Matches.Add(match.Value);
                 }
-
-                line = sr.ReadLine();
             }
-
-            sr.Close();
         }
 
         public int PartOne(List<string> matches)
