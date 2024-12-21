@@ -36,17 +36,17 @@ namespace AdventOfCode2024.Days
                     while (matrix[i][j] == 'X' && directionCount <= 7)
                     {
                         int letterCheck = 0;
-                        var currentLetter = matrix[i][j];
-                        var currentPosition = (i, j);
+                        var currentPosition = matrix[i][j];
+                        var currentIndex = (i, j);
                         bool inBounds = true;
 
-                        while (letterCheck <= 3 && inBounds && checkNextLetter(currentLetter, letterCheck))
+                        while (letterCheck <= 3 && inBounds && checkNextLetter(currentPosition, letterCheck))
                         {
-                            var nextPos = nextPosition(currentPosition, currentDirection);
-                            inBounds = nextPos != currentPosition;
+                            var nextPos = nextPosition(currentIndex, currentDirection);
+                            inBounds = nextPos != currentIndex;
 
-                            currentPosition = (nextPos.nextRow, nextPos.nextCol);
-                            currentLetter = matrix[nextPos.nextRow][nextPos.nextCol];
+                            currentIndex = (nextPos.nextRow, nextPos.nextCol);
+                            currentPosition = matrix[nextPos.nextRow][nextPos.nextCol];
 
                             letterCheck++;
 
@@ -73,17 +73,58 @@ namespace AdventOfCode2024.Days
             {
                 for (int j = 0; j < matrix[i].Length; j++)
                 {
-                    Direction currentDirection = Direction.UpLeft;
+                    Direction[] directionArray = [Direction.UpLeft, Direction.DownRight, Direction.UpRight, Direction.DownLeft];
                     int directionCount = 0;
+                    bool confirmedXmas = false;
+                    bool inBounds = true;
 
-                    while (matrix[i][j] == 'A' && directionCount <= 3)
+                    while (matrix[i][j] == 'A' && directionCount <= 3 && !confirmedXmas && inBounds)
                     {
+                        var currentIndex = (i, j);
+                        char previousLetter = 'X';
+                        char currentLetter;
+                        int okCheck = 0;
 
+                        foreach (Direction direction in directionArray)
+                        {
+                            var nextPos = nextPosition(currentIndex, direction);
+                            inBounds = nextPos != currentIndex;
+
+                            if (inBounds)
+                            {
+                                if (directionCount == 0 || directionCount == 2)
+                                {
+                                    previousLetter = matrix[nextPos.nextRow][nextPos.nextCol];
+                                }
+                                else
+                                {
+                                    currentLetter = matrix[nextPos.nextRow][nextPos.nextCol];
+                                    if (compareLetters(previousLetter, currentLetter))
+                                        okCheck++;
+                                }
+                            }
+
+                            directionCount++;
+                        }
+
+                        if (okCheck == 2)
+                        {
+                            xmasCount++;
+                        }
                     }
                 }
             }
 
             return xmasCount;
+        }
+
+        private bool compareLetters(char previous, char current)
+        {
+            if ((previous == 'M' && current == 'S') || (previous == 'S' && current == 'M'))
+            {
+                return true;
+            }
+            return false;
         }
 
         private bool checkNextLetter(char letter, int position)
@@ -105,27 +146,6 @@ namespace AdventOfCode2024.Days
                     break;
                 default:
                     return false;
-            }
-            if (letter == expected)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        private bool checkNextLetterX(char letter, char previous = 'X')
-        {
-            char expected;
-            switch (previous)
-            {
-                case 'M':
-                    expected = 'S';
-                    break;
-                case 'S':
-                    expected = 'M';
-                    break;
-                default:
-                    return true;
             }
             if (letter == expected)
             {
@@ -218,17 +238,6 @@ namespace AdventOfCode2024.Days
                 Direction.UpRight => Direction.DownLeft,
                 Direction.DownLeft => Direction.DownRight,
                 _ => Direction.Up
-            };
-        }
-
-        private Direction nextDirectionX(Direction direction)
-        {
-            return direction switch
-            {
-                Direction.UpLeft => Direction.DownRight,
-                Direction.DownRight => Direction.UpRight,
-                Direction.UpRight => Direction.DownLeft,
-                Direction.DownLeft => Direction.UpLeft
             };
         }
 
