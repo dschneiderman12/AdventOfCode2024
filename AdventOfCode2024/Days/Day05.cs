@@ -54,6 +54,7 @@ namespace AdventOfCode2024.Days
             return middles.Sum();
         }
 
+
         private int checkUpdateList(List<int> update)
         {
             int addToTotal = 0;
