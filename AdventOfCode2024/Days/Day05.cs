@@ -9,7 +9,7 @@ namespace AdventOfCode2024.Days
 {
     internal class Day05
     {
-        public Dictionary<int, List<int>> OrderRules { get; set; } = new Dictionary<int, List<int>>();
+        private static Dictionary<int, List<int>> OrderRules { get; set; } = new Dictionary<int, List<int>>();
         public List<List<int>> UpdatesList { get; set; } = new List<List<int>>();
 
         public void Setup()
@@ -42,14 +42,61 @@ namespace AdventOfCode2024.Days
             }
         }
 
-        public int PartOne(Dictionary<int, List<int>> orderRules, List<List<int>> updatesList)
+        public int PartOne(List<List<int>> updatesList)
         {
             List<int> middles = new List<int>();
 
-
-
+            foreach (List<int> update in updatesList)
+            {
+                middles.Add(checkUpdateList(update));
+            }
 
             return middles.Sum();
+        }
+
+        private int checkUpdateList(List<int> update)
+        {
+            int addToTotal = 0;
+            bool updateOK = true;
+
+            foreach (int num in update)
+            {
+                if (updateOK)
+                {
+                    List<int>? rule = OrderRules.TryGetValue(num, out List<int>? value) ? value : null;
+
+                    for (int i = update.IndexOf(num) + 1; i < update.Count; i++)
+                    {
+                        if (rule != null && !rule.Contains(update[i]))
+                        {
+                            updateOK = false;
+                            break;
+                        }
+
+                        //if (i == update.Count - 1)
+                        //{
+                        //    List<int>? finalRule = OrderRules.TryGetValue(update[i], out List<int>? _) ? value : null;
+
+                        //    if (finalRule != null && finalRule.Contains(update[i - 1]))
+                        //    {
+                        //        updateOK = false;
+                        //    }                        
+                        //}
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            if (updateOK)
+            {
+                int middleIndex = (update.Count - 1) / 2;
+                addToTotal += update[middleIndex];
+            }
+
+            return addToTotal;
         }
     }
 }
