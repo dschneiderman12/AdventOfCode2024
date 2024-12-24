@@ -117,7 +117,7 @@ namespace AdventOfCode2024.Days
             {
                 foreach (List<int> rule in OrderRules.Where(x => x.Contains(num)))
                 {
-                    for (int i = update.IndexOf(num); i < update.Count; i++)
+                    for (int i = update.IndexOf(num) + 1; i < update.Count; i++)
                     {
                         if (rule.Contains(update[i]) &&
                             (rule.IndexOf(num) > rule.IndexOf(update[i])))
@@ -139,19 +139,21 @@ namespace AdventOfCode2024.Days
             {
                 foreach (List<int> rule in OrderRules.Where(x => x.Contains(num)))
                 {
-                    for (int i = update.IndexOf(num); i < update.Count; i++)
+                    for (int i = update.IndexOf(num) + 1; i < update.Count; i++)
                     {
                         if (rule.Contains(update[i]) &&
                             (rule.IndexOf(num) > rule.IndexOf(update[i])))
                         {
                             updatedList.Remove(num);
-                            updatedList.Insert(update.IndexOf(update[i]), num);
+                            updatedList.Insert(i, num);
+                            fixBadUpdates(updatedList);
+                            return getMiddleIndex(updatedList);
                         }
                     }
                 }
             }
 
-            return getMiddleIndex(updatedList);
+            return 0;
         }
 
         private int getMiddleIndex(List<int> numbers)
