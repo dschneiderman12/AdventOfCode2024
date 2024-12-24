@@ -9,7 +9,8 @@ namespace AdventOfCode2024.Days
 {
     internal class Day05
     {
-        private static Dictionary<int, List<int>> OrderRules { get; set; } = new Dictionary<int, List<int>>();
+        //private static Dictionary<int, List<int>> OrderRules { get; set; } = new Dictionary<int, List<int>>();
+        private static List<int> OrderRules {  get; set; } = new List<int>();
         public List<List<int>> UpdatesList { get; set; } = new List<List<int>>();
 
         public void Setup()
@@ -19,27 +20,64 @@ namespace AdventOfCode2024.Days
             string[] fileSplit = fileContent.Split(["\r\n\r\n"], StringSplitOptions.RemoveEmptyEntries);
 
             var rules = fileSplit[0].Split("\r\n");
-
             var updates = fileSplit[1].Split("\r\n");
 
-            foreach (string rule in rules)
-            {
-                var ruleSplit = rule.Split('|').Select(int.Parse).ToList();
-                if (OrderRules.ContainsKey(ruleSplit[0]))
-                {
-                    OrderRules[ruleSplit[0]].Add(ruleSplit[1]);
-                }
-                else
-                {
-                    OrderRules.Add(ruleSplit[0], new List<int> { ruleSplit[1] });
-                }                
-            }
+            OrderRules = sortRules(rules);
+
+            //foreach (string rule in rules)
+            //{
+            //    var ruleSplit = rule.Split('|').Select(int.Parse).ToList();
+            //    if (OrderRules.ContainsKey(ruleSplit[0]))
+            //    {
+            //        OrderRules[ruleSplit[0]].Add(ruleSplit[1]);
+            //    }
+            //    else
+            //    {
+            //        OrderRules.Add(ruleSplit[0], new List<int> { ruleSplit[1] });
+            //    }                
+            //}
 
             foreach (string update in updates)
             {
                 List<int> intList = update.Split(",").Select(int.Parse).ToList();
                 UpdatesList.Add(intList);
             }
+        }
+
+        private List<int> sortRules (String[] rulesToSort)
+        {
+            var resultList = new List<int>();
+
+            foreach (string rule in rulesToSort)
+            {
+                var ruleSplit = rule.Split('|').Select(int.Parse).ToList();
+                bool hasFirst = resultList.Contains(ruleSplit[0]);
+                bool hasSecond = resultList.Contains(ruleSplit[1]);
+
+                if (!hasFirst && !hasSecond)
+                {
+                    resultList.Add(ruleSplit[0]);
+                    resultList.Add(ruleSplit[1]);
+                }
+                else if (hasFirst && !hasSecond)
+                {
+                    resultList.Insert(resultList.IndexOf(ruleSplit[0]) + 1, ruleSplit[1]);
+                }
+                else if (!hasFirst)
+                {
+                    resultList.Insert(resultList.IndexOf(ruleSplit[1]), ruleSplit[0]);
+                }
+                else 
+                {
+                    if (resultList.IndexOf(ruleSplit[0]) > resultList.IndexOf(ruleSplit[1]))
+                    {
+                        resultList.Remove(ruleSplit[0]);
+                        resultList.Insert(resultList.IndexOf(ruleSplit[1]), ruleSplit[0]);
+                    }
+                }
+            }
+
+            return resultList;
         }
 
         public int PartOne(List<List<int>> updatesList)
@@ -60,34 +98,14 @@ namespace AdventOfCode2024.Days
             int addToTotal = 0;
             bool updateOK = true;
 
-            foreach (int num in update)
+            for (int i = 0; i < update.Count() - 1; i++)
             {
-                if (updateOK)
+                if (updateOK) 
                 {
-                    List<int>? rule = OrderRules.TryGetValue(num, out List<int>? value) ? value : null;
-
-                    for (int i = update.IndexOf(num) + 1; i < update.Count; i++)
+                    for (int j = 0; j < OrderRules.Count() - 1; j++)
                     {
-                        if (rule != null && !rule.Contains(update[i]))
-                        {
-                            updateOK = false;
-                            break;
-                        }
-
-                        //if (i == update.Count - 1)
-                        //{
-                        //    List<int>? finalRule = OrderRules.TryGetValue(update[i], out List<int>? _) ? value : null;
-
-                        //    if (finalRule != null && finalRule.Contains(update[i - 1]))
-                        //    {
-                        //        updateOK = false;
-                        //    }                        
-                        //}
+                        if ()
                     }
-                }
-                else
-                {
-                    break;
                 }
             }
 
