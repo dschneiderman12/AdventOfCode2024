@@ -9,7 +9,6 @@ namespace AdventOfCode2024.Days
 {
     internal class Day05
     {
-        //private static Dictionary<int, List<int>> OrderRules { get; set; } = new Dictionary<int, List<int>>();
         private static List<List<int>> OrderRules { get; set; } = new List<List<int>>();
         public List<List<int>> UpdatesList { get; set; } = new List<List<int>>();
 
@@ -22,6 +21,7 @@ namespace AdventOfCode2024.Days
             var rules = fileSplit[0].Split("\r\n");
             var updates = fileSplit[1].Split("\r\n");
 
+            #region Failed Dictionary
             //foreach (string rule in rules)
             //{
             //    var ruleSplit = rule.Split('|').Select(int.Parse).ToList();
@@ -34,6 +34,7 @@ namespace AdventOfCode2024.Days
             //        OrderRules.Add(ruleSplit[0], new List<int> { ruleSplit[1] });
             //    }                
             //}
+            #endregion
 
             foreach (string rule in rules)
             {
@@ -48,6 +49,7 @@ namespace AdventOfCode2024.Days
             }
         }
 
+        #region Failed rule sorting
         //private List<int> sortRules (String[] rulesToSort)
         //{
         //    var resultList = new List<int>();
@@ -86,6 +88,7 @@ namespace AdventOfCode2024.Days
 
         //    return resultList;
         //}
+        #endregion
 
         public int PartOne(List<List<int>> updatesList)
         {
