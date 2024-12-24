@@ -91,39 +91,72 @@ namespace AdventOfCode2024.Days
         {
             List<int> middles = new List<int>();
 
-            foreach (List<int> update in updatesList)
+            foreach (List<int> update in updatesList.Where(checkUpdateList))
             {
-                if (checkUpdateList(update))
-                {
-                    int middleIndex = (update.Count - 1) / 2;
-                    middles.Add(update[middleIndex]);
-                }                
+                middles.Add(update[getMiddleIndex(update)]);
             }
 
             return middles.Sum();
         }
 
+        public int PartTwo(List<List<int>> updatesList)
+        {
+            List<int> middles = new List<int>();
+
+            foreach (List<int> update in updatesList.Where(x => !checkUpdateList(x)))
+            {
+                middles.Add(update[fixBadUpdates(update)]);
+            }
+
+            return middles.Sum();
+        }
 
         private bool checkUpdateList(List<int> update)
-        {    
+        {
             foreach (int num in update)
             {
-                foreach (List<int> rule in OrderRules)
+                foreach (List<int> rule in OrderRules.Where(x => x.Contains(num)))
                 {
-                    if (rule.Contains(num))
+                    for (int i = update.IndexOf(num); i < update.Count; i++)
                     {
-                        for (int i = update.IndexOf(num); i < update.Count; i++)
+                        if (rule.Contains(update[i]) &&
+                            (rule.IndexOf(num) > rule.IndexOf(update[i])))
                         {
-                            if (rule.Contains(update[i]) &&
-                                (rule.IndexOf(num) > rule.IndexOf(update[i])))
-                            {
-                                return false;
-                            }
+                            return false;
                         }
                     }
                 }
             }
+
             return true;
-        }          
+        }
+
+        private int fixBadUpdates(List<int> update)
+        {
+            List<int> updatedList = update;
+
+            foreach (int num in update)
+            {
+                foreach (List<int> rule in OrderRules.Where(x => x.Contains(num)))
+                {
+                    for (int i = update.IndexOf(num); i < update.Count; i++)
+                    {
+                        if (rule.Contains(update[i]) &&
+                            (rule.IndexOf(num) > rule.IndexOf(update[i])))
+                        {
+                            updatedList.Remove(num);
+                            updatedList.Insert(update.IndexOf(update[i]), num);
+                        }
+                    }
+                }
+            }
+
+            return getMiddleIndex(updatedList);
+        }
+
+        private int getMiddleIndex(List<int> numbers)
+        {
+            return (numbers.Count - 1) / 2;
+        }
     }
 }

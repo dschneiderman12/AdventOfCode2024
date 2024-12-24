@@ -68,10 +68,10 @@ namespace AdventOfCode2024
             day05.Setup();
 
             string answer05One = day05.PartOne(day05.UpdatesList).ToString();
-            //string answer04Two = day04.PartTwo(day04.matrix).ToString();
+            string answer05Two = day05.PartTwo(day05.UpdatesList).ToString();
 
             Console.WriteLine("Day 05 - Part One: " + answer05One);
-            //Console.WriteLine("Day 04 - Part Two: " + answer04Two);
+            Console.WriteLine("Day 05 - Part Two: " + answer05Two);
             #endregion
 
             Console.WriteLine();
