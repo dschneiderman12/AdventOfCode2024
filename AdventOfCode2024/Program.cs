@@ -64,14 +64,24 @@ namespace AdventOfCode2024
             #endregion
 
             #region Day Five
-            Day05 day05 = new Day05();
-            day05.Setup();
+            //Day05 day05 = new Day05();
+            //day05.Setup();
 
-            string answer05One = day05.PartOne(day05.UpdatesList).ToString();
-            string answer05Two = day05.PartTwo(day05.UpdatesList).ToString();
+            //string answer05One = day05.PartOne(day05.UpdatesList).ToString();
+            //string answer05Two = day05.PartTwo(day05.UpdatesList).ToString();
 
-            Console.WriteLine("Day 05 - Part One: " + answer05One);
-            Console.WriteLine("Day 05 - Part Two: " + answer05Two);
+            //Console.WriteLine("Day 05 - Part One: " + answer05One);
+            //Console.WriteLine("Day 05 - Part Two: " + answer05Two);
+            #endregion
+
+            #region Day Six
+            Day06 day06 = new Day06();
+
+            string answer06One = day06.PartOne().ToString();
+            //string answer05Two = day05.PartTwo(day05.UpdatesList).ToString();
+
+            Console.WriteLine("Day 06 - Part One: " + answer06One);
+            //Console.WriteLine("Day 05 - Part Two: " + answer05Two);
             #endregion
 
             Console.WriteLine();
